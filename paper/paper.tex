@@ -1,0 +1,77 @@
+\documentclass[11pt,a4paper,english]{article}
+\usepackage{natbib}  % Adds support for different citation styles
+\bibliographystyle{chicago}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\usepackage{blindtext}
+\usepackage[nodayofweek,level]{datetime}
+\newdate{date}{05}{12}{2024}
+\date{\displaydate{date}}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\doublespacing
+
+
+
+\title{Analyzing the effects of Subway proximity on real estate prices in London 
+\thanks{Code and data supporting this analysis is available at: \url{https://github.com/Aman-Rana-02/}}}
+\author{%
+  Aman Rana \\ 1007034692 \\ aman.rana@mail.utoronto.ca
+  \and
+  Pierre Sarrailh \\ 1006770111 \\ pierre.sarrailh@mail.utoronto.ca
+}
+\date{}
+\begin{document}
+  \maketitle
+  \begin{center}
+    ECO375: Applied Econometrics \\ 
+    University of Toronto \\ 
+    Department of Economics \\
+    5\textsuperscript{th} December, 2024
+  \end{center}
+
+  \begin{abstract}
+    \noindent Following \citet{zhou_2019} we saw that the completion of subway lines increased the prices of real estate in their proximity. Our contribution will be to look at these effects in London. 
+     We found precise null effects by a multivariate linear regression of distance from a station on the log of house prices, with controls for time and district. In a regression of log price on the distance 
+     from the nearest station with time and district controls, the slope coefficient is -0.0000268 with a standard error of 0.000000687, 
+     a statistically significant relationship of such small effect it led us to conclude precise null effects. 
+     The effect is economically insignificant, even a 10km distance from a station (which is above the 95th 
+     percentile of our distance data) would lead to only a 0.2\% decrease in house price. 
+     On more relative terms, a standard deviation difference in distance is only associated with a 
+     14\% of a standard deviation change in log house price. 
+     A possible further investigation would be to look at the treatment effect of having a 
+     nearer subway station using a difference-in-difference (DiD) framework. 
+     Using the DiD framework we would be aiming to investigate the effect of specifically 
+     new subway stations on house prices while accounting standardizing over previously built ones.
+  \end{abstract}
+
+  % \newpage
+  % \tableofcontents
+
+  \newpage
+  \input{00-introduction}
+
+  \input{01-data}
+
+  \input{02-regression_analysis}
+  
+  \input{03-results}
+
+  \input{04-conclusion}
+
+  \newpage
+  \bibliographystyle{chicago}
+  \bibliography{references}
+
+  \newpage
+  \section*{Appendix}
+  \renewcommand{\thesection}{\Alph{section}}
+  \setcounter{section}{0}
+  \input{05-appendix}
+\end{document}

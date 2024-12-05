@@ -1,0 +1,28 @@
+\section{Discussion}
+\label{sec:conclusion}
+\subsection{Limitations of Results}
+The analysis of our limitations can be broken into internal and external validity.
+ Our regression is misspecified and has an omitted variable bias.
+  One potential omitted variable could be house size.
+   We would expect house size to explain some of the variation in house price since larger houses command higher prices.
+    However without further analysis it would be difficult to estimate the effect of house size since larger houses are in less dense areas of the city where property is also generally cheaper.
+     We also run into the problem of simultaneous causality, areas that become trendy and develop would command higher housing prices, 
+     which could justify a new subway station nearby. We attempt to control for this using time-invariant district fixed effects 
+     but that does not solve the time-variant relationship where growing neighborhoods get subway allocations.
+      In a future work we would frame a subway being built as a treatment, and attempt a difference-in-difference analysis, 
+      so we can gauge economic significance and price effects of subways without having to consider some of the other omitted variables.
+In our analysis we also assumed that our data was i.i.d. However we can assure that this may not be true as we 
+saw in the 2008 financial crisis when many people sell houses at the same time it leads to a depreciation in 
+house price which leads to more people selling their homes. This means that one person selling their house may 
+affect the decision of another person to sell their own home.
+The external validity of our regression is limited. The population studied are homes in the Greater London Area, 
+with observations from 1995 to 2024. We can use our model to make inferences on homes that fit within this sample space, 
+however, expect pricing dynamics to be different between cities and regimes. For example, in smaller cities we might expect 
+price variation to be independent of subway locations if there is sufficient coverage.
+
+
+\subsection{Conclusion}
+Houses closer to subway stations in the Greater London Area see higher prices than those further away. 
+This analysis includes controls for time, district, and a polynomial fit for the distance and price relationship. 
+We would warn against assuming external validity, and exogenous factors like governance and housing density could affect inferences. 
+Our results are statistically significant but economically insignificant.

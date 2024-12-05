@@ -1,0 +1,24 @@
+\section{Regression Analysis}
+\label{sec:regression_analysis}
+
+For our regression analysis we created three different formulas of increasing specificity to best capture the strength of our variable of interest as a predictor for price change. We began by looking at the basic relationship between the distance to a subway station and the log of price. We chose to use a log linear formula as our findings look at the effect of distance on price, or in other words how much change from our average home price does 1 meter of distance have. After looking at Figure 1 we realized that the effects of distance may be closely related to price only for houses very near to a subway station. Therefore, we created a dummy variable which calculated the effect on prices for houses within X meters of a subway station and outside that range. For our second formula we found that our errors were dependent on our variable of interest, meaning we had omitted variable bias so for our third formula we accounted for omitted variables. Finally for our fourth formula we also looked at non-linear relationships between our variable of interest and our other explainer variables.
+
+For our analysis, for all our formulas we assumed that our data was i.i.d since 
+logically the sale of one house does not have an effect on others selling their own homes.
+ This assumption may be questioned but it is outside the scope of this paper and discussed further in our limitations section.
+ In our data cleaning section we also clipped all our large outliers to be equal to 10 km therefore we can assume our data contains no large outliers.
+  For all our calculations we used robust standard error and therefore aren’t concerned about the homoscedasticity of errors.
+   We discuss omitted variable bias further in each respective subsection
+
+3.1 Simple Linear Regression
+$Log(Price)=12.52-.0000441*Min_dist$
+Using this formula we were able to get statistically significant null effects for distance on price. From our table 2, see that the coefficient of our variable of interest is -.0000431 at above the 5% significance. This result is quite weak as we found that even houses positioned 10 km away from a subway station wouldn’t even observe a difference above 1% in house price from the mean. To try and increase the robustness of our analysis we looked at other variables which may explain the variability in home prices and in doing so we can come up with a list of new omitted variables to include in our multi factor linear regression.
+We calculate the omitted variable bias for our variable of interest on our formula. To account for this we then calculate our next formula using a distance dummy 
+This simple regression model is misspecified. Intuitively the variation of house prices can be explained by more factors. We expect that this leads to a coefficient with a downward bias, the subway distance explaining variation caused by other factors: size, year of observation and age of house. 
+3.2 Simple Linear Regression With a Dummy Variable
+$Log(Price)=B_0+B_1*dist_dummy$
+The mean of our errors over each year was not equal to 0, as seen in table X. To account for this
+3.3 Multiple Linear Regression With a Dummy Variable
+$Log(Price)=B_0+B_1*dist_dummy+B_n*Ommited_n$
+3.4 Multiple Regression With Linear and Non-Linear effects
+$Log(Price)=B_0+B_1*dist_dummy+B_2*dist^2+B_n*Ommited_n$
