@@ -1,215 +1,315 @@
 {
 \def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
 \begin{longtable}{l*{1}{c}}
-\caption{Regression Results}\\
+\caption{Multivariate regression results, min\_dist is a polynomial and in-context with district, year, house age, and district-year interaction fixed effects.}\\
 \toprule\endfirsthead\midrule\endhead\midrule\endfoot\endlastfoot
                     &\multicolumn{1}{c}{(1)}\\
                     &\multicolumn{1}{c}{log\_price}\\
 \midrule
-Min\_dist            &   -0.000124\sym{***}\\
-                    &(0.00000144)         \\
+Min\_dist            &   -0.000126\sym{***}\\
+                    &(0.00000145)         \\
 \addlinespace
-min\_dist\_squared    &    1.07e-08\sym{***}\\
+min\_dist\_squared    &    1.09e-08\sym{***}\\
                     &  (1.35e-10)         \\
 \addlinespace
 N                   &           0         \\
                     &         (.)         \\
 \addlinespace
-Y                   &       0.116\sym{***}\\
+Y                   &       0.115\sym{***}\\
                     &   (0.00475)         \\
 \addlinespace
 Year=1995           &           0         \\
                     &         (.)         \\
 \addlinespace
-Year=1996           &      0.0609\sym{***}\\
-                    &   (0.00657)         \\
+Year=1996           &      0.0600\sym{***}\\
+                    &   (0.00653)         \\
 \addlinespace
-Year=1997           &       0.191\sym{***}\\
-                    &   (0.00645)         \\
+Year=1997           &       0.192\sym{***}\\
+                    &   (0.00648)         \\
 \addlinespace
-Year=1998           &       0.319\sym{***}\\
-                    &   (0.00649)         \\
+Year=1998           &       0.320\sym{***}\\
+                    &   (0.00663)         \\
 \addlinespace
 Year=1999           &       0.483\sym{***}\\
-                    &   (0.00621)         \\
+                    &   (0.00652)         \\
 \addlinespace
-Year=2000           &       0.660\sym{***}\\
-                    &   (0.00636)         \\
+Year=2000           &       0.662\sym{***}\\
+                    &   (0.00685)         \\
 \addlinespace
-Year=2001           &       0.782\sym{***}\\
-                    &   (0.00612)         \\
+Year=2001           &       0.783\sym{***}\\
+                    &   (0.00684)         \\
 \addlinespace
-Year=2002           &       0.941\sym{***}\\
-                    &   (0.00598)         \\
+Year=2002           &       0.940\sym{***}\\
+                    &   (0.00698)         \\
 \addlinespace
-Year=2003           &       1.062\sym{***}\\
-                    &   (0.00601)         \\
-\addlinespace
-Year=2004           &       1.136\sym{***}\\
-                    &   (0.00594)         \\
-\addlinespace
-Year=2005           &       1.183\sym{***}\\
-                    &   (0.00612)         \\
-\addlinespace
-Year=2006           &       1.256\sym{***}\\
-                    &   (0.00595)         \\
-\addlinespace
-Year=2007           &       1.382\sym{***}\\
-                    &   (0.00603)         \\
-\addlinespace
-Year=2008           &       1.384\sym{***}\\
+Year=2003           &       1.061\sym{***}\\
                     &   (0.00729)         \\
 \addlinespace
-Year=2009           &       1.359\sym{***}\\
-                    &   (0.00770)         \\
+Year=2004           &       1.136\sym{***}\\
+                    &   (0.00756)         \\
 \addlinespace
-Year=2010           &       1.437\sym{***}\\
-                    &   (0.00738)         \\
+Year=2005           &       1.183\sym{***}\\
+                    &   (0.00804)         \\
 \addlinespace
-Year=2011           &       1.456\sym{***}\\
-                    &   (0.00755)         \\
+Year=2006           &       1.255\sym{***}\\
+                    &   (0.00826)         \\
 \addlinespace
-Year=2012           &       1.503\sym{***}\\
-                    &   (0.00740)         \\
+Year=2007           &       1.381\sym{***}\\
+                    &   (0.00870)         \\
 \addlinespace
-Year=2013           &       1.555\sym{***}\\
-                    &   (0.00722)         \\
+Year=2008           &       1.383\sym{***}\\
+                    &   (0.00997)         \\
 \addlinespace
-Year=2014           &       1.673\sym{***}\\
-                    &   (0.00725)         \\
+Year=2009           &       1.358\sym{***}\\
+                    &    (0.0106)         \\
 \addlinespace
-Year=2015           &       1.772\sym{***}\\
-                    &   (0.00731)         \\
+Year=2010           &       1.435\sym{***}\\
+                    &    (0.0108)         \\
 \addlinespace
-Year=2016           &       1.847\sym{***}\\
-                    &   (0.00763)         \\
-\addlinespace
-Year=2017           &       1.877\sym{***}\\
-                    &   (0.00839)         \\
-\addlinespace
-Year=2018           &       1.897\sym{***}\\
-                    &   (0.00845)         \\
-\addlinespace
-Year=2019           &       1.902\sym{***}\\
-                    &   (0.00861)         \\
-\addlinespace
-Year=2020           &       1.956\sym{***}\\
-                    &   (0.00885)         \\
-\addlinespace
-Year=2021           &       1.977\sym{***}\\
-                    &   (0.00739)         \\
-\addlinespace
-Year=2022           &       2.037\sym{***}\\
-                    &   (0.00821)         \\
-\addlinespace
-Year=2023           &       2.013\sym{***}\\
-                    &   (0.00888)         \\
-\addlinespace
-Year=2024           &       2.004\sym{***}\\
+Year=2011           &       1.454\sym{***}\\
                     &    (0.0113)         \\
+\addlinespace
+Year=2012           &       1.501\sym{***}\\
+                    &    (0.0116)         \\
+\addlinespace
+Year=2013           &       1.552\sym{***}\\
+                    &    (0.0118)         \\
+\addlinespace
+Year=2014           &       1.672\sym{***}\\
+                    &    (0.0123)         \\
+\addlinespace
+Year=2015           &       1.770\sym{***}\\
+                    &    (0.0127)         \\
+\addlinespace
+Year=2016           &       1.844\sym{***}\\
+                    &    (0.0134)         \\
+\addlinespace
+Year=2017           &       1.874\sym{***}\\
+                    &    (0.0143)         \\
+\addlinespace
+Year=2018           &       1.895\sym{***}\\
+                    &    (0.0147)         \\
+\addlinespace
+Year=2019           &       1.899\sym{***}\\
+                    &    (0.0154)         \\
+\addlinespace
+Year=2020           &       1.954\sym{***}\\
+                    &    (0.0158)         \\
+\addlinespace
+Year=2021           &       1.975\sym{***}\\
+                    &    (0.0154)         \\
+\addlinespace
+Year=2022           &       2.032\sym{***}\\
+                    &    (0.0164)         \\
+\addlinespace
+Year=2023           &       2.006\sym{***}\\
+                    &    (0.0171)         \\
+\addlinespace
+Year=2024           &       2.001\sym{***}\\
+                    &    (0.0189)         \\
 \addlinespace
 BARKING AND DAGENHAM&           0         \\
                     &         (.)         \\
 \addlinespace
-BARNET              &       0.626\sym{***}\\
-                    &   (0.00636)         \\
+BARNET              &       2.765         \\
+                    &     (1.732)         \\
 \addlinespace
-BEXLEY              &       0.316\sym{***}\\
-                    &   (0.00694)         \\
+BEXLEY              &       5.589\sym{***}\\
+                    &     (1.409)         \\
 \addlinespace
-BRENT               &       0.481\sym{***}\\
-                    &   (0.00698)         \\
+BRENT               &      -18.80\sym{***}\\
+                    &     (1.985)         \\
 \addlinespace
-BROMLEY             &       0.550\sym{***}\\
-                    &   (0.00765)         \\
+BROMLEY             &       5.656\sym{***}\\
+                    &     (1.398)         \\
 \addlinespace
-CAMDEN              &       0.959\sym{***}\\
-                    &   (0.00835)         \\
+CAMDEN              &      -6.014\sym{**} \\
+                    &     (2.238)         \\
 \addlinespace
-CITY OF LONDON      &       0.806\sym{***}\\
-                    &    (0.0370)         \\
+CITY OF LONDON      &      -23.00         \\
+                    &     (15.16)         \\
 \addlinespace
-CITY OF WESTMINSTER &       1.153\sym{***}\\
-                    &   (0.00916)         \\
+CITY OF WESTMINSTER &      -17.20\sym{***}\\
+                    &     (2.563)         \\
 \addlinespace
-CROYDON             &       0.399\sym{***}\\
-                    &   (0.00670)         \\
+CROYDON             &       5.677\sym{***}\\
+                    &     (1.403)         \\
 \addlinespace
-EALING              &       0.531\sym{***}\\
-                    &   (0.00615)         \\
+EALING              &      -1.319         \\
+                    &     (1.711)         \\
 \addlinespace
-ENFIELD             &       0.450\sym{***}\\
-                    &   (0.00609)         \\
+ENFIELD             &       2.589         \\
+                    &     (1.548)         \\
 \addlinespace
-GREENWICH           &       0.464\sym{***}\\
-                    &   (0.00654)         \\
+GREENWICH           &      -3.600\sym{*}  \\
+                    &     (1.594)         \\
 \addlinespace
-HACKNEY             &       0.618\sym{***}\\
-                    &   (0.00711)         \\
+HACKNEY             &      -29.40\sym{***}\\
+                    &     (1.884)         \\
 \addlinespace
-HAMMERSMITH AND FULHAM&       0.926\sym{***}\\
-                    &   (0.00778)         \\
+HAMMERSMITH AND FULHAM&      -4.303\sym{*}  \\
+                    &     (2.087)         \\
 \addlinespace
-HARINGEY            &       0.508\sym{***}\\
-                    &   (0.00694)         \\
+HARINGEY            &      -11.89\sym{***}\\
+                    &     (1.858)         \\
 \addlinespace
-HARROW              &       0.464\sym{***}\\
-                    &   (0.00696)         \\
+HARROW              &       5.828\sym{**} \\
+                    &     (1.884)         \\
 \addlinespace
-HAVERING            &       0.353\sym{***}\\
-                    &   (0.00549)         \\
+HAVERING            &       11.91\sym{***}\\
+                    &     (1.403)         \\
 \addlinespace
-HILLINGDON          &       0.386\sym{***}\\
-                    &   (0.00547)         \\
+HILLINGDON          &       7.313\sym{***}\\
+                    &     (1.485)         \\
 \addlinespace
-HOUNSLOW            &       0.474\sym{***}\\
-                    &   (0.00675)         \\
+HOUNSLOW            &       5.766\sym{**} \\
+                    &     (1.857)         \\
 \addlinespace
-ISLINGTON           &       0.783\sym{***}\\
-                    &   (0.00783)         \\
+ISLINGTON           &      -5.135\sym{*}  \\
+                    &     (2.103)         \\
 \addlinespace
-KENSINGTON AND CHELSEA&       1.430\sym{***}\\
-                    &    (0.0102)         \\
+KENSINGTON AND CHELSEA&      -12.13\sym{***}\\
+                    &     (2.716)         \\
 \addlinespace
-KINGSTON UPON THAMES&       0.790\sym{***}\\
-                    &   (0.00748)         \\
+KINGSTON UPON THAMES&       4.581\sym{**} \\
+                    &     (1.757)         \\
 \addlinespace
-LAMBETH             &       0.613\sym{***}\\
-                    &   (0.00584)         \\
+LAMBETH             &      -9.541\sym{***}\\
+                    &     (1.563)         \\
 \addlinespace
-LEWISHAM            &       0.508\sym{***}\\
-                    &   (0.00636)         \\
+LEWISHAM            &      -17.67\sym{***}\\
+                    &     (1.465)         \\
 \addlinespace
-MERTON              &       0.612\sym{***}\\
-                    &   (0.00705)         \\
+MERTON              &      -0.689         \\
+                    &     (1.881)         \\
 \addlinespace
-NEWHAM              &       0.129\sym{***}\\
-                    &   (0.00544)         \\
+NEWHAM              &      -13.05\sym{***}\\
+                    &     (1.550)         \\
 \addlinespace
-REDBRIDGE           &       0.340\sym{***}\\
-                    &   (0.00577)         \\
+REDBRIDGE           &       1.208         \\
+                    &     (1.579)         \\
 \addlinespace
-RICHMOND UPON THAMES&       1.002\sym{***}\\
-                    &   (0.00689)         \\
+RICHMOND UPON THAMES&       9.189\sym{***}\\
+                    &     (1.756)         \\
 \addlinespace
-SOUTHWARK           &       0.620\sym{***}\\
-                    &   (0.00678)         \\
+SOUTHWARK           &      -17.08\sym{***}\\
+                    &     (1.809)         \\
 \addlinespace
-SUTTON              &       0.521\sym{***}\\
-                    &   (0.00618)         \\
+SUTTON              &       8.695\sym{***}\\
+                    &     (1.509)         \\
 \addlinespace
-TOWER HAMLETS       &       0.530\sym{***}\\
-                    &   (0.00714)         \\
+TOWER HAMLETS       &       2.964         \\
+                    &     (1.962)         \\
 \addlinespace
-WALTHAM FOREST      &       0.272\sym{***}\\
-                    &   (0.00539)         \\
+WALTHAM FOREST      &      -22.81\sym{***}\\
+                    &     (1.452)         \\
 \addlinespace
-WANDSWORTH          &       0.804\sym{***}\\
-                    &   (0.00570)         \\
+WANDSWORTH          &      -2.433         \\
+                    &     (1.529)         \\
 \addlinespace
-Constant            &       10.83\sym{***}\\
-                    &   (0.00641)         \\
+BARKING AND DAGENHAM $\times$ Year&    -0.00161\sym{*}  \\
+                    &  (0.000762)         \\
+\addlinespace
+BARNET $\times$ Year&    -0.00268\sym{**} \\
+                    &  (0.000863)         \\
+\addlinespace
+BEXLEY $\times$ Year&    -0.00424\sym{***}\\
+                    &  (0.000702)         \\
+\addlinespace
+BRENT $\times$ Year &     0.00799\sym{***}\\
+                    &  (0.000990)         \\
+\addlinespace
+BROMLEY $\times$ Year&    -0.00416\sym{***}\\
+                    &  (0.000696)         \\
+\addlinespace
+CAMDEN $\times$ Year&     0.00186         \\
+                    &   (0.00111)         \\
+\addlinespace
+CITY OF LONDON $\times$ Year&      0.0102         \\
+                    &   (0.00756)         \\
+\addlinespace
+CITY OF WESTMINSTER $\times$ Year&     0.00753\sym{***}\\
+                    &   (0.00128)         \\
+\addlinespace
+CROYDON $\times$ Year&    -0.00424\sym{***}\\
+                    &  (0.000699)         \\
+\addlinespace
+EALING $\times$ Year&   -0.000691         \\
+                    &  (0.000852)         \\
+\addlinespace
+ENFIELD $\times$ Year&    -0.00268\sym{***}\\
+                    &  (0.000771)         \\
+\addlinespace
+GREENWICH $\times$ Year&    0.000413         \\
+                    &  (0.000795)         \\
+\addlinespace
+HACKNEY $\times$ Year&      0.0133\sym{***}\\
+                    &  (0.000939)         \\
+\addlinespace
+HAMMERSMITH AND FULHAM $\times$ Year&    0.000992         \\
+                    &   (0.00104)         \\
+\addlinespace
+HARINGEY $\times$ Year&     0.00456\sym{***}\\
+                    &  (0.000926)         \\
+\addlinespace
+HARROW $\times$ Year&    -0.00429\sym{***}\\
+                    &  (0.000938)         \\
+\addlinespace
+HAVERING $\times$ Year&    -0.00737\sym{***}\\
+                    &  (0.000699)         \\
+\addlinespace
+HILLINGDON $\times$ Year&    -0.00506\sym{***}\\
+                    &  (0.000740)         \\
+\addlinespace
+HOUNSLOW $\times$ Year&    -0.00425\sym{***}\\
+                    &  (0.000926)         \\
+\addlinespace
+ISLINGTON $\times$ Year&     0.00134         \\
+                    &   (0.00105)         \\
+\addlinespace
+KENSINGTON AND CHELSEA $\times$ Year&     0.00515\sym{***}\\
+                    &   (0.00135)         \\
+\addlinespace
+KINGSTON UPON THAMES $\times$ Year&    -0.00350\sym{***}\\
+                    &  (0.000875)         \\
+\addlinespace
+LAMBETH $\times$ Year&     0.00345\sym{***}\\
+                    &  (0.000778)         \\
+\addlinespace
+LEWISHAM $\times$ Year&     0.00744\sym{***}\\
+                    &  (0.000730)         \\
+\addlinespace
+MERTON $\times$ Year&   -0.000965         \\
+                    &  (0.000937)         \\
+\addlinespace
+NEWHAM $\times$ Year&     0.00496\sym{***}\\
+                    &  (0.000772)         \\
+\addlinespace
+REDBRIDGE $\times$ Year&    -0.00205\sym{**} \\
+                    &  (0.000787)         \\
+\addlinespace
+RICHMOND UPON THAMES $\times$ Year&    -0.00569\sym{***}\\
+                    &  (0.000874)         \\
+\addlinespace
+SOUTHWARK $\times$ Year&     0.00720\sym{***}\\
+                    &  (0.000902)         \\
+\addlinespace
+SUTTON $\times$ Year&    -0.00568\sym{***}\\
+                    &  (0.000752)         \\
+\addlinespace
+TOWER HAMLETS $\times$ Year&    -0.00282\sym{**} \\
+                    &  (0.000979)         \\
+\addlinespace
+WALTHAM FOREST $\times$ Year&     0.00988\sym{***}\\
+                    &  (0.000723)         \\
+\addlinespace
+WANDSWORTH $\times$ Year&           0         \\
+                    &         (.)         \\
+\addlinespace
+Constant            &       14.07\sym{***}\\
+                    &     (1.525)         \\
 \midrule
+R-squared           &       0.633         \\
 Observations        &      347373         \\
 \bottomrule
 \multicolumn{2}{l}{\footnotesize Standard errors in parentheses}\\

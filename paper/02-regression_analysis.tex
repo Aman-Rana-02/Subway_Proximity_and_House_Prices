@@ -1,24 +1,114 @@
 \section{Regression Analysis}
 \label{sec:regression_analysis}
 
-For our regression analysis we created three different formulas of increasing specificity to best capture the strength of our variable of interest as a predictor for price change. We began by looking at the basic relationship between the distance to a subway station and the log of price. We chose to use a log linear formula as our findings look at the effect of distance on price, or in other words how much change from our average home price does 1 meter of distance have. After looking at Figure 1 we realized that the effects of distance may be closely related to price only for houses very near to a subway station. Therefore, we created a dummy variable which calculated the effect on prices for houses within X meters of a subway station and outside that range. For our second formula we found that our errors were dependent on our variable of interest, meaning we had omitted variable bias so for our third formula we accounted for omitted variables. Finally for our fourth formula we also looked at non-linear relationships between our variable of interest and our other explainer variables.
+For our regression analysis we built four different specifications to best capture the 
+relationship between the distance to a subway station and the log of price. We choose a log-linear model so that our coefficients
+are interpretable as percentage changes in price. We inspect our variable of interest in two forms, continuous so we can 
+see the marginal effect of each additional meter of distance on price, and as a dummy variable to see the effect of being subjectively close to a subway station.
+We look at Figure~\ref{log_price_scatter} to see the relationship between distance and price, and decide on 2000m as distinguishing being close to a station or far.
+For our analysis, we assume that our data is identical and independently distributed since we do not expect the lease transfer of one house to affect the lease transfer of another.
+In our data cleaning section we windsorize distance at 10km and can assume our data contains no large outliers.
+We use robust standard errors in our regressions, and therefore aren't concerned about the homoscedasticity of errors.
 
-For our analysis, for all our formulas we assumed that our data was i.i.d since 
-logically the sale of one house does not have an effect on others selling their own homes.
- This assumption may be questioned but it is outside the scope of this paper and discussed further in our limitations section.
- In our data cleaning section we also clipped all our large outliers to be equal to 10 km therefore we can assume our data contains no large outliers.
-  For all our calculations we used robust standard error and therefore aren’t concerned about the homoscedasticity of errors.
-   We discuss omitted variable bias further in each respective subsection
+\subsection{Univariate Linear Regressions}
+\subsubsection{Univariate Specifications}
+\begin{equation}
+   \log(\text{Price}) =\beta_0 + \beta_1 \cdot \text{Min\_dist}+\epsilon
+      \label{eq:univariate_linear_regression}
+\end{equation}
+\begin{equation}
+   \log(\text{Price}) =\beta_0+\beta_2 \cdot \text{close}+\epsilon
+   \label{eq:dummy_univariate_linear_regression}
+\end{equation}
 
-3.1 Simple Linear Regression
-$Log(Price)=12.52-.0000441*Min_dist$
-Using this formula we were able to get statistically significant null effects for distance on price. From our table 2, see that the coefficient of our variable of interest is -.0000431 at above the 5% significance. This result is quite weak as we found that even houses positioned 10 km away from a subway station wouldn’t even observe a difference above 1% in house price from the mean. To try and increase the robustness of our analysis we looked at other variables which may explain the variability in home prices and in doing so we can come up with a list of new omitted variables to include in our multi factor linear regression.
-We calculate the omitted variable bias for our variable of interest on our formula. To account for this we then calculate our next formula using a distance dummy 
-This simple regression model is misspecified. Intuitively the variation of house prices can be explained by more factors. We expect that this leads to a coefficient with a downward bias, the subway distance explaining variation caused by other factors: size, year of observation and age of house. 
-3.2 Simple Linear Regression With a Dummy Variable
-$Log(Price)=B_0+B_1*dist_dummy$
-The mean of our errors over each year was not equal to 0, as seen in table X. To account for this
-3.3 Multiple Linear Regression With a Dummy Variable
-$Log(Price)=B_0+B_1*dist_dummy+B_n*Ommited_n$
-3.4 Multiple Regression With Linear and Non-Linear effects
-$Log(Price)=B_0+B_1*dist_dummy+B_2*dist^2+B_n*Ommited_n$
+Where:
+\begin{itemize}
+   \setlength{\itemsep}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\parsep}{0pt}%
+      \item $Log(Price)$ is the log of the price of the house
+      \item $\beta_0$ is the intercept and not shared between the two specifications
+      \item $\beta_1$ is the coefficient of the distance to the nearest subway station
+      \item $\beta_2$ is the coefficient of the distance dummy, whether the house is close (within 2000m) to a subway station or not
+      \item $\text{Min\_dist}$ is the distance to the nearest subway station
+      \item $\epsilon$ is the error term
+   \end{itemize}
+
+\subsubsection{Univariate Results}
+We start with our simplest specifications. We regress the log of price on the distance to the nearest subway station to get a basic understanding of the 
+relationship between our variable of interest and our dependent variable. 
+Using this specification we find statistically significant null effects for distance on price . 
+Table~\ref{summary_regression_table} shows us that the coefficient of our variable of interest is -.0000431 at above the 5\% significance.
+The coefficient can be interpreted as a 0.0000431\% decrease in house price for each additional meter of distance from a subway station, which is economically insignificant.
+ Even houses positioned 10 km away from a subway station wouldn't even observe a difference above 1\% in house price from the mean.
+Looking at the results from specification \ref{eq:dummy_univariate_linear_regression} we see that the coefficient is economically and statistically significant,
+with a coefficient representing a 0.31\% increase in house price for houses within 2000m of a subway station (Table~\ref{summary_regression_table}).
+What this tells us is that the marginal effect of being a metre closer to a subway station is not significant. But, buyers' willingness to pay follows a piecewise function, and have some threshold of distance over which
+they are willing to pay more for a house. Essentially, above a certain threshold the distance from a subway station is not a consideration.
+In this case, whether you are within 2km of a subway station or not is a significant factor in determining house price, and adds a 0.33\% premium.
+
+However, these models are underspecified. They suffer from omitted variable bias, there are variables that comove with distance from a subway station that also affect house prices, and we delve into these
+controls in our multivariate analysis. We would expect the economic significance of distnace to increase with the inclusion of these controls.
+Since subway stations are typically central, we would expect neighbourhoods further away to have lower house prices. Omitting 
+district controls would bias our coefficient to be more positive than it should be. We would also expect house prices to increase over time, whereas they decrease with min\_dist. Omitting time controls would bias our coefficient to be more 
+positive than it should be.
+\subsection{Multivariate Linear Regressions}
+
+\subsubsection{Multivariate Specifications}
+\begin{equation}
+   \begin{aligned}
+   \log(\text{Price}) &= \beta_0 + \beta_1 \cdot \text{Min\_dist} + \beta_3 \cdot (\text{Min\_dist})^2 \\
+   &\quad + \beta_4 \cdot \text{oldnew} + \beta_5 \cdot \text{district}
+   + \beta_6 \cdot \text{year} + \beta_7 \cdot (\text{district} \times \text{year}) + \epsilon
+   \end{aligned}
+   \label{eq:multivariate_linear_regression}
+\end{equation}
+   
+\begin{equation}
+   \begin{aligned}
+   \log(\text{Price}) &= \beta_0 + \beta_2 \cdot \text{close}\\
+   &\quad + \beta_4 \cdot \text{oldnew} + \beta_5 \cdot \text{district} 
+   + \beta_6 \cdot \text{year} + \beta_7 \cdot (\text{district} \times \text{year}) 
+   + \epsilon
+   \end{aligned}
+   \label{eq:dummy_multivariate_linear_regression}
+\end{equation}
+
+Where:
+\begin{itemize}
+   \setlength{\itemsep}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\parsep}{0pt}%
+      \item $\beta_3$ is the coefficient of the squared distance to the nearest subway station
+      \item $\beta_4$ is the coefficient on the age of the house
+      \item $\beta_5$ is a matrix of coefficients for district dummies
+      \item $\beta_6$ is the coefficient of the year
+      \item $\beta_7$ is a matrix of coefficients for the interaction of district and year dummies
+      \item $\text{oldnew}$ is a dummy variable for the age of the house
+      \item $\text{district}$ represents dummy variables for the district of the house
+      \item $\text{year}$ represents dummy variables for the year of the observation
+   \end{itemize}
+
+We include a squared term for distance in our multivariate regression to account for the non-linear relationship between distance and price we find in Figure\ref{log_price_scatter}.
+
+We now include controls for the age of the house, the district of the house, and the year of the observation. The economic basis for this, is we expect there to be 
+price variation between older and newer homes because of the quality of the home. We also expect price variation between districts as some districts
+hold premiums due to proximity to a city center or other amenities. We also expect price variation over time as the economy grows and inflation occurs.
+Consider that some districts receive more or less government funding and expansion. Since we might expect the time varying effect to be different across districts, we include an interaction term between district and year.
+
+\subsubsection{Multivariate Results}
+Table~\ref{tab:summary_regression_table} hides the coefficients of the controls, but a full table of the results can be found in the appendix under Table~\ref{tab:full_MV_regression_results} and Table~\ref{tab:full_MV_regression_results_w_dummy}.
+
+In our multivariate regression with the continuous polynomial for distance (Specification \ref{eq:multivariate_linear_regression}), we find that the coefficient is still economically insignificant (-0.0001261). As expected, controlling for district and time-varying effects increases the magnitude of our result, 
+but we still conclude a precise null marginal effect of distance on house price.
+
+In our final specification (Specification~\ref{eq:dummy_multivariate_linear_regression}),
+ we find that the coefficient of the dummy variable for being close to a subway station is still economically and statistically significant. 
+ However, much of the variation is now explained by the controls, and we find a more reasonable 0.18\% increase attributable to being close (Within 2km) to a subway station.
+
+Notably, our $R^2$ jumps from 0.03 in our univariate regression to 0.6 in our multivariate regression(Table \ref{tab:full_simple_regression_results} and Table~\ref{tab:full_MV_regression_results}).
+This is a good sign that our multivariate specifications which include controls are explaining much of the variation in logarithmic house prices.
+
+Looking at the predicted versus actual plots in Figure~\ref{MV_bucketed_predicted_vs_actual} and Figure~\ref{MV_dummy_bucketed_predicted_vs_actual}, we see that our models are well-specified, apart from at the lower tail.
+Most predicted values lie on the 45 degree line, however, we are systematically underpredicting the prices of the lowest priced homes. This is further reflected in the residual fits
+as seen in Figure \ref{MV_fitted_vs_residuals} and Figure \ref{MV_dummy_fitted_vs_residuals}. We see that our residuals are randomly distributed around 0 apart from at the lower tail, where they are systematically positive.

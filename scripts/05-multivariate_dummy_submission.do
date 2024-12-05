@@ -22,16 +22,19 @@ encode district, gen(district_encoded)
 estimates drop _all
 
 // Regression results without min_dist_squared
-reg log_price i.min_dist i.oldnew_encoded i.year i.district_encoded, robust
-reg log_price i.min_dist i.oldnew_encoded i.year i.district_encoded, robust coeflegend
+reg log_price i.min_dist i.oldnew_encoded i.year i.district_encoded c.year#i.district_encoded
+// reg log_price i.min_dist i.oldnew_encoded c.year##i.district_encoded, robust coeflegend
 
 // Export regression results to LaTeX
 esttab using "../tables/dummy_MV_regression_table.tex", ///
-    title("Regression Results") ///
-    label se star(* 0.05 ** 0.01 *** 0.001) ///
+    title("Regression results using the close/far dummy Min_dist is either 0 or 1. Shows us that the dummy effect is still economically and statistically significant in-context with our controls.") ///
+    label ///
+    se ///
+    star(* 0.05 ** 0.01 *** 0.001) ///
     booktabs ///
     alignment(c) ///
     longtable ///
+    stats(r2 N, labels("R-squared" "Observations")) /// Include R-squared and Number of Observations
     replace
 
 // Generate fitted values and residuals
@@ -46,7 +49,8 @@ collapse (mean) log_price fitted_values residuals, by(fitted_bucket)
 twoway (scatter log_price fitted_bucket, msymbol(circle)) ///
        (line fitted_values fitted_bucket, lcolor(blue)), ///
        title("Bucketed: Expected vs Actual") ///
-       xlabel(, angle(45)) ylabel(, angle(45))
+       xtitle("Predicted", angle(45)) ///
+       ytitle("Actual", angle(45))
 
 // Save the plot as png
 graph export "../figs/bucketed_dummy_expected_vs_actual.png", as(png) replace
@@ -59,7 +63,3 @@ twoway (scatter residuals fitted_bucket, msymbol(circle)), ///
 // Save the plot as png
 graph export "../figs/dummy_fitted_vs_residuals.png", as(png) replace
 
-// Display and save regression statistics
-display _N
-display _b[min_dist]
-display _se[min_dist]

@@ -2,6 +2,8 @@
 \label{sec:conclusion}
 \subsection{Limitations of Results}
 The analysis of our limitations can be broken into internal and external validity.
+
+\subsubsection{Internal Validity}
  Our regression is misspecified and has an omitted variable bias.
   One potential omitted variable could be house size.
    We would expect house size to explain some of the variation in house price since larger houses command higher prices.
@@ -15,6 +17,8 @@ In our analysis we also assumed that our data was i.i.d. However we can assure t
 saw in the 2008 financial crisis when many people sell houses at the same time it leads to a depreciation in 
 house price which leads to more people selling their homes. This means that one person selling their house may 
 affect the decision of another person to sell their own home.
+
+\subsubsection{External Validity}
 The external validity of our regression is limited. The population studied are homes in the Greater London Area, 
 with observations from 1995 to 2024. We can use our model to make inferences on homes that fit within this sample space, 
 however, expect pricing dynamics to be different between cities and regimes. For example, in smaller cities we might expect 
@@ -23,6 +27,9 @@ price variation to be independent of subway locations if there is sufficient cov
 
 \subsection{Conclusion}
 Houses closer to subway stations in the Greater London Area see higher prices than those further away. 
-This analysis includes controls for time, district, and a polynomial fit for the distance and price relationship. 
+This analysis includes controls for time, district, and a polynomial fit for the distance and price relationship.
+The relationship is likely piece wise, beyond 2km away from a station the distance from a station has little effect on price.
 We would warn against assuming external validity, and exogenous factors like governance and housing density could affect inferences. 
-Our results are statistically significant but economically insignificant.
+Marginal distance from subway stations are statistically significant but economically insignificant in their relationship with house price.
+Being 'close' to a subway station however, is statistically and economically significant, even when controlling for district, building age,
+ and time effects.

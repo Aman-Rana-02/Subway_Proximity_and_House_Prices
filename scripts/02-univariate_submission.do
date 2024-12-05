@@ -42,17 +42,16 @@ esttab using "../tables/simple_univariate_summary_stats_table.tex", ///
 estimates drop _all
 //Regression results
 reg log_price min_dist, robust
-reg log_price min_dist, robust coeflegend
+// reg log_price min_dist, robust coeflegend
 eststo
 
-esttab using "results/simple_regression_table.tex", ///
+esttab using "../tables/simple_regression_table.tex", ///
     title("Regression Results") ///
-    label se star(* 0.05 ** 0.01 *** 0.001) ///
+    label ///
+    se ///
+    star(* 0.05 ** 0.01 *** 0.001) ///
     booktabs ///
     alignment(c) ///
     longtable ///
+    stats(r2 N, labels("R-squared" "Observations")) /// Include R-squared and Number of Observations
     replace
-
-display _N
-display _b[min_dist]
-display _se[min_dist]

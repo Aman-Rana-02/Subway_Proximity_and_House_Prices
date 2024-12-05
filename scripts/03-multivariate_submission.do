@@ -62,16 +62,19 @@ esttab using "../tables/non_numeric_summary_stats_year.tex", ///
 
 estimates drop _all
 //Regression results
-reg log_price min_dist min_dist_squared i.oldnew_encoded i.year i.district_encoded, robust
-reg log_price min_dist min_dist_squared i.oldnew_encoded i.year i.district_encoded, robust coeflegend
+reg log_price min_dist min_dist_squared i.oldnew_encoded i.year i.district_encoded c.year#i.district_encoded, robust
+// reg log_price min_dist min_dist_squared i.oldnew_encoded i.year c.year#i.district_encoded, robust coeflegend
 
 // Export regression results to LaTeX
 esttab using "../tables/multivariate_regression_table.tex", ///
-    title("Regression Results") ///
-    label se star(* 0.05 ** 0.01 *** 0.001) ///
+    title("Multivariate regression results, min_dist is a polynomial and in-context with district, year, house age, and district-year interaction fixed effects.") ///
+    label ///
+    se ///
+    star(* 0.05 ** 0.01 *** 0.001) ///
     booktabs ///
     alignment(c) ///
     longtable ///
+    stats(r2 N, labels("R-squared" "Observations")) /// Include R-squared and Number of Observations
     replace
 	
 * Generate fitted values and residuals
@@ -85,7 +88,8 @@ collapse (mean) log_price fitted_values residuals, by(fitted_bucket)
 twoway (scatter log_price fitted_bucket, msymbol(circle)) ///
        (line fitted_values fitted_bucket, lcolor(blue)), ///
        title("Bucketed: Expected vs Actual") ///
-       xlabel(, angle(45)) ylabel(, angle(45))
+       xtitle("Predicted", angle(45)) ///
+       ytitle("Actual", angle(45))
 
 * Save as png
 graph export "../figs/MV_bucketed_expected_vs_actual.png", as(png) replace
@@ -97,7 +101,3 @@ twoway (scatter residuals fitted_bucket, msymbol(circle)), ///
 
 * Save the plot as a png
 graph export "../figs/MV_fitted_vs_residuals.png", as(png) replace
-
-display _N
-display _b[min_dist]
-display _se[min_dist]

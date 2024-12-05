@@ -24,11 +24,14 @@ reg log_price min_dist, robust coeflegend
 eststo
 
 esttab using "../tables/dummy_simple_regression_table.tex", ///
-    title("Regression Results") ///
-    label se star(* 0.05 ** 0.01 *** 0.001) ///
+    title("Regression results for the close/far dummy variable. Shows us the relationship is economically piece wise.") ///
+    label ///
+    se ///
+    star(* 0.05 ** 0.01 *** 0.001) ///
     booktabs ///
     alignment(c) ///
     longtable ///
+    stats(r2 N, labels("R-squared" "Observations")) /// Include R-squared and Number of Observations
     replace
 
 display _N

@@ -1,2 +1,93 @@
 \section{Appendix}
 \label{sec:appendix}
+
+\subsection{Regression Summary and Figures}
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{lcccc}
+        \toprule
+        \textbf{Coefficient} & \textbf{\ref{eq:univariate_linear_regression}} & \textbf{\ref{eq:dummy_univariate_linear_regression}} & \textbf{\ref{eq:multivariate_linear_regression}} & \textbf{\ref{eq:dummy_multivariate_linear_regression}} \\
+        \midrule
+        \text{Intercept} & 12.52 & 12.22 &  14.57 & 14.57 \\
+                           & (0.00208) & (0.00202) & (1.826) & (1.826) \\
+        \text{min\_dist} & -0.0000441 & & -0.000126 &  \\
+                           & (0.000000470) &  & (0.00000145) &  \\
+        \text{close}      &  & 0.314 &  & 0.189 \\
+                           &  & (0.00283) &  & (0.00290) \\
+        \text{min\_dist$^2$} & & & 1.09e-08 & \\
+                              &  & & (1.35e-10) &  \\
+        \midrule
+        \textbf{Controls} & No & No & Yes & Yes \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:summary_regression_table}
+    \caption{Regression Coefficients and Standard Errors for Model Specifications 1-4. Controls hold district, year, house age, and year-district interactions.}
+\end{table}
+
+% Figure showing log_price scatter (../figs/log_price_distance_scatter.png). Label: log_price_scatter
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{../figs/log_price_distance_scatter.png}
+    \caption{Scatter plot of log price against distance to the nearest subway station. Notice the non-linear relationship, and piece wise nature beyond 2km.}
+    \label{log_price_scatter}
+\end{figure}
+
+% Figure showing fitted vs residuals for multivariate regression (../figs/MV_predicted_vs_actual.png). Label: MV_predicted_vs_actual
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{../figs/MV_fitted_vs_residuals.png}
+    \caption{Fitted vs Residuals plot for the multivariate regression. The residuals are distributed randomly around 0 apart from at the lower tail where they break down.
+    Results are after bucketing predicteds into bins for easier interpretation.
+    Results are from the regression in Specification \ref{eq:multivariate_linear_regression}.}
+    \label{MV_fitted_vs_residuals}
+\end{figure}
+
+% Figure showing expected vs actual for multivariate regression (../figs/MV_bucketed_predicted_vs_actual.png). Label: MV_bucketed_predicted_vs_actual
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{../figs/MV_bucketed_expected_vs_actual.png}
+    \caption{Bucketed Expected vs Actual plot for the multivariate regression. The expected values are bucketed into 10 bins and the actual values are averaged within each bin
+    we do this becuase with over 340000 observations the plots otherwise are difficult to interpret. 
+    Results are from the regression in Specification \ref{eq:multivariate_linear_regression}.}
+    \label{MV_bucketed_predicted_vs_actual}
+\end{figure}
+
+% Same two but incl dummy
+% Figure showing fitted vs residuals for multivariate regression with dummy (../figs/bucketed_dummy_expected_vs_actual.png). Label: MV_dummy_bucketed_predicted_vs_actual
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{../figs/bucketed_dummy_expected_vs_actual.png}
+    \caption{Bucketed Expected vs Actual plot for the multivariate regression with dummy. The expected values are bucketed into 10 bins and the actual values are averaged within each bin
+    we do this because with over 340000 observations the plots otherwise are difficult to interpret.
+    Results are from the regression in Specification \ref{eq:dummy_multivariate_linear_regression}.}
+    \label{MV_dummy_bucketed_predicted_vs_actual}
+\end{figure}
+
+% Figure showing fitted vs residuals for multivariate regression with dummy (../figs/dummy_fitted_vs_residuals.png). Label: MV_dummy_fitted_vs_residuals
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{../figs/dummy_fitted_vs_residuals.png}
+    \caption{Fitted vs Residuals plot for the multivariate regression with dummy. The residuals are distributed randomly around 0 apart from at the lower tail where they break down.
+    Results are after bucketing predicteds into bins for easier interpretation.
+    Results are from the regression in Specification \ref{eq:dummy_multivariate_linear_regression}.}
+    \label{MV_dummy_fitted_vs_residuals}
+\end{figure}
+
+
+\newpage
+\subsection{Extensive Regression Results}
+% Import simple regression table (../tables/simple_regression_table.tex). Label is full_simple_regression_results
+\input{../tables/simple_regression_table.tex}
+\label{tab:full_simple_regression_results}
+
+% Import simple regression table with dummy (../tables/simple_regression_table_w_dummy.tex). Label is full_simple_regression_results_w_dummy
+\input{../tables/dummy_simple_regression_table.tex}
+\label{tab:full_simple_regression_results_w_dummy}
+
+% Import full multivariate regression table (../tables/full_MV_regression_results.tex)
+\input{../tables/multivariate_regression_table.tex}
+\label{tab:full_MV_regression_results}
+
+% Import full multivariate regression table with dummy (../tables/full_MV_regression_results_w_dummy.tex)
+\input{../tables/dummy_MV_regression_table.tex}
+\label{tab:full_MV_regression_results_w_dummy}
