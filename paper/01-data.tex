@@ -1,27 +1,30 @@
 \section{Data}
 \label{sec:data}
 We began our analysis by sourcing data from ONS, the national statistics arm of the UK government,
- which provided panel data containing each lease transfer (home sale) that has occurred in the U.K. from 1995 to today.
+ which provided panel data containing each lease transfer (home sale) that has occurred in the U.K. from 1995 to today \citep{land_ukgov}.
   We pruned this dataset to only contain observations within the Greater London Area.
    This dataset amounts to approximately 350 thousand observations. Each unit of observation represents
     a single occurrence of a lease transfer in London containing the date, coordinates, neighborhood, and price of each observation's
      lease transfer.  The second source of our data was a table containing the coordinates of each subway station in the
-      London underground and the date at which it was opened. 
+      London underground and the date at which it was opened \citep{subway_wikipedia}. 
 To begin our analysis we combined these two datasets by using the date and coordinates of our houses to search for the closest
  subway station to the current house in the second dataset. This allowed us to get the minimum distance to a subway station at
   the time of its sale which we added to our ONS dataset as the variable calculating the euclidean distance to the closest station
    and a variable for the coordinate of the closest subway. For all houses which were further than 10 km away from a subway station
     we set their distance to be equal to 10 km to account for outliers in our data.
-Delving into the summary statistics of our data, which can be found in tables 1 to 4, we can look at how the data is spread
+Delving into the summary statistics of our data, we can look at how the data is spread
  across our different variables. For our main variables of interest, the distance to subway stations, we see that we have an
-  average distance of 2821 meters with a variance of 2915 meters. This means that on average houses are located quite far from
+  average distance of 2821 meters with a variance of 2915 meters (Table~\ref{tab:continuous_summary_stats}). This means that on average houses are located quite far from
    a subway station but also contain vast amounts of variation. From our earlier work on the matter the reason for this high
     variation and mean is due to the fact that a lot of houses are located very close to subway stations but there is a very
-     long tail in our data with a significant number of houses located over 5 kilometers away. 
+     long tail in our data with a significant number of houses located over 5 kilometers away. We truncate these
+     outliers at 10km, and the distribution of the minimum distance to a subway station can be seen in Figure~\ref{min_dist_distribution}.
+     Raw house price is also right skewed with a long tail, so we take the log of house prices to make our regression more interpretable
+      and the distribution of log price can be seen in Figure~\ref{log_price_distribution}.
 On the categorical side of things we see that our houses are very evenly spread between our neighborhoods with the largest
- neighborhood only being 2 points off of the mean. Similarly, our lease transfers were also very evenly spread between years
+ neighborhood only being 2 points off of the mean (Table~\ref{tab:summary_district}). Similarly, our lease transfers were also very evenly spread between years
   with each year accounting for approximately 2\% 
-  of our dataset. This is good for the robustness of our future models since the even spread of data between 
+  of our dataset (Table~\ref{tab:summary_year}). This is good for the robustness of our future models since the even spread of data between 
   our neighbourhoods would provide us enough data to account for outliers within neighbourhoods. 
   On the other hand the spread between newly built and old homes is quite dismal with 97\%
-   of lease transfers being accounted for by the sale of pre-owned homes and as a result it will be more sensitive to outliers.
+   of lease transfers being accounted for by the sale of pre-owned homes and as a result it will be more sensitive to outliers (Table~\ref{tab:summary_ON}).

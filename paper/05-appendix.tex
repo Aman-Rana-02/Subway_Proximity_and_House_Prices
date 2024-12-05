@@ -32,6 +32,22 @@
     \label{log_price_scatter}
 \end{figure}
 
+% Figure shoiwng the distribution of min_dist (../figs/hist_min_dist.png). Label: min_dist_distribution
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{../figs/hist_min_dist.png}
+    \caption{Distribution of the minimum distance to a subway station. The raw distribution is right skewed with a long tail so we windsorize at 10km.}
+    \label{min_dist_distribution}
+\end{figure}
+
+% Figure showing the distribution of log_price (../figs/hist_log_price.png). Label: log_price_distribution
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{../figs/hist_log_price.png}
+    \caption{Distribution of log price. The log transformation accounts for the long tails in house price's distribution, and makes our regression nicely interpretable.}
+    \label{log_price_distribution}
+\end{figure}
+
 % Figure showing fitted vs residuals for multivariate regression (../figs/MV_predicted_vs_actual.png). Label: MV_predicted_vs_actual
 \begin{figure}
     \centering
@@ -73,6 +89,23 @@
     \label{MV_dummy_fitted_vs_residuals}
 \end{figure}
 
+\newpage
+\subsection{Data Summary Statistics}
+% Import continuous summary statistics table (../tables/numeric_MV_summary_stats.tex). Label is continuous_summary_stats
+\input{../tables/numeric_MV_summary_stats.tex}
+\label{tab:continuous_summary_stats}
+
+% Import Old/New summary statistics table (../tables/non_nymeric_summary_stats_ON.tex). Label is summary_ON
+\input{../tables/non_numeric_summary_stats_ON.tex}
+\label{tab:summary_ON}
+
+% Import district summary statistics table (../tables/non_numeric_summary_stats_district.tex). Label is summary_district
+\input{../tables/non_numeric_summary_stats_district.tex}
+\label{tab:summary_district}
+
+% Import year summary statistics table (../tables/non_numeric_summary_stats_year.tex). Label is summary_year
+\input{../tables/non_numeric_summary_stats_year.tex}
+\label{tab:summary_year}
 
 \newpage
 \subsection{Extensive Regression Results}
