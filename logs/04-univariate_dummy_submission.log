@@ -1,0 +1,109 @@
+------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/amanrana/Documents/Projects/Subway_Proximity_and_House_Prices/scripts/../logs/04-univariate_dummy_submission.log
+  log type:  text
+ opened on:   5 Dec 2024, 20:06:27
+
+. use "../data/02-analysis_data/housing_data.dta", clear
+
+. 
+. // Drop NaN or Price/Distance is <= 0
+. drop if missing(price) | missing(min_dist)
+(0 observations deleted)
+
+. drop if price <= 0 | min_dist <= 0
+(0 observations deleted)
+
+. 
+. // Winsorize at the 95th percentile
+. summarize min_dist, detail
+
+                          Min_dist
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%     123.3681       5.747817
+ 5%     264.6804       5.747817
+10%     364.7357       5.747817       Obs             347,373
+25%     659.4009       5.747817       Sum of wgt.     347,373
+
+50%     1468.847                      Mean           2978.145
+                        Largest       Std. dev.      3673.846
+75%     4241.727       226519.6
+90%     7814.425       226519.6       Variance       1.35e+07
+95%     10141.07       226519.6       Skewness       10.83181
+99%     15286.28       226519.6       Kurtosis        569.311
+
+. local p95_dist = r(p95)
+
+. replace min_dist = `p95_dist' if min_dist > `p95_dist'
+(17,367 real changes made)
+
+. 
+. // Convert min_dist to binary: 1 if min_dist < 2000, 0 otherwise
+. replace min_dist = (min_dist < 2000)
+(347,373 real changes made)
+
+. 
+. // Log-transform the price
+. gen log_price = log(price)
+
+. 
+. // Clear previous estimates
+. estimates drop _all
+
+. 
+. // Regression results
+. reg log_price min_dist, robust
+
+Linear regression                               Number of obs     =    347,373
+                                                F(1, 347371)      =   12287.26
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0326
+                                                Root MSE          =     .84288
+
+------------------------------------------------------------------------------
+             |               Robust
+   log_price | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+    min_dist |   .3136755   .0028298   110.85   0.000     .3081292    .3192218
+       _cons |   12.21589   .0020161  6059.06   0.000     12.21194    12.21984
+------------------------------------------------------------------------------
+
+. reg log_price min_dist, robust coeflegend
+
+Linear regression                               Number of obs     =    347,373
+                                                F(1, 347371)      =   12287.26
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0326
+                                                Root MSE          =     .84288
+
+------------------------------------------------------------------------------
+   log_price | Coefficient  Legend
+-------------+----------------------------------------------------------------
+    min_dist |   .3136755  _b[min_dist]
+       _cons |   12.21589  _b[_cons]
+------------------------------------------------------------------------------
+
+. eststo
+(est1 stored)
+
+. 
+. esttab using "../tables/dummy_simple_regression_table.tex", ///
+>     title("Regression results for the close/far dummy variable. Shows us the relationship is economically piece wise.") ///
+>     label ///
+>     se ///
+>     star(* 0.05 ** 0.01 *** 0.001) ///
+>     booktabs ///
+>     alignment(c) ///
+>     longtable ///
+>     stats(r2 N, labels("R-squared" "Observations")) /// Include R-squared and Number of Observations
+>     replace
+(output written to ../tables/dummy_simple_regression_table.tex)
+
+. 
+. log close
+      name:  <unnamed>
+       log:  /Users/amanrana/Documents/Projects/Subway_Proximity_and_House_Prices/scripts/../logs/04-univariate_dummy_submission.log
+  log type:  text
+ closed on:   5 Dec 2024, 20:06:27
+------------------------------------------------------------------------------------------------------------------------------------------------

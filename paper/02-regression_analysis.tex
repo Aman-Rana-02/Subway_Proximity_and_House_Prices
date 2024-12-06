@@ -1,7 +1,7 @@
 \section{Regression Analysis}
 \label{sec:regression_analysis}
 
-For our regression analysis we built four different specifications to best capture the 
+For our regression analysis we build four different specifications to best capture the 
 relationship between the distance to a subway station and the log of price. We choose a log-linear model so that our coefficients
 are interpretable as percentage changes in price. We inspect our variable of interest in two forms, continuous so we can 
 see the marginal effect of each additional meter of distance on price, and as a dummy variable to see the effect of being subjectively close to a subway station.
@@ -35,9 +35,9 @@ Where:
    \end{itemize}
 
 \subsubsection{Univariate Results}
-We start with our simplest specifications. We regress the log of price on the distance to the nearest subway station to get a basic understanding of the 
+We start with our simplest specifications. We regress the log of price on distance to get a basic understanding of the 
 relationship between our variable of interest and our dependent variable. 
-Using this specification we find statistically significant null effects for distance on price . 
+Using this specification we find statistically significant null effects for distance on price. 
 Table~\ref{tab:summary_regression_table} shows us that the coefficient of our variable of interest is -.0000431 at above the 5\% significance.
 The coefficient can be interpreted as a 0.0000431\% decrease in house price for each additional meter of distance from a subway station, which is economically insignificant.
  Even houses positioned 10 km away from a subway station wouldn't even observe a difference above 1\% in house price from the mean.
@@ -105,6 +105,7 @@ but we still conclude a precise null marginal effect of distance on house price.
 In our final specification (Specification~\ref{eq:dummy_multivariate_linear_regression}),
  we find that the coefficient of the dummy variable for being close to a subway station is still economically and statistically significant. 
  However, much of the variation is now explained by the controls, and we find a more reasonable 0.18\% increase attributable to being close (Within 2km) to a subway station.
+ This aligns with the results of \citet{rietveld_2007}, which finds that the price effect of subway stations is primarily in short distances.
 
 Notably, our $R^2$ jumps from 0.03 in our univariate regression to 0.6 in our multivariate regression(Table \ref{tab:full_simple_regression_results} and Table~\ref{tab:full_MV_regression_results}).
 This is a good sign that our multivariate specifications which include controls are explaining much of the variation in logarithmic house prices.

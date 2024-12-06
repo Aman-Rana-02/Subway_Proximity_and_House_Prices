@@ -1,0 +1,141 @@
+------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/amanrana/Documents/Projects/Subway_Proximity_and_House_Prices/scripts/../logs/02-univariate_submission.log
+  log type:  text
+ opened on:   5 Dec 2024, 20:03:53
+
+. use "../data/02-analysis_data/housing_data.dta", clear
+
+. 
+. // //Save a scatter plot of price on min_dist
+. scatter price min_dist, ytitle("Price") xtitle("Distance to the Closest Station")
+
+. graph export "../figs/price_distance_scatter.png", replace
+file /Users/amanrana/Documents/Projects/Subway_Proximity_and_House_Prices/scripts/../figs/price_distance_scatter.png saved as PNG format
+
+. 
+. //Drop NaN or Price/Distance is <= 0
+. drop if missing(price) | missing(min_dist)
+(0 observations deleted)
+
+. drop if price <= 0 | min_dist <= 0
+(0 observations deleted)
+
+. 
+. //Windsorize at the 95th
+. summarize min_dist, detail
+
+                          Min_dist
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%     123.3681       5.747817
+ 5%     264.6804       5.747817
+10%     364.7357       5.747817       Obs             347,373
+25%     659.4009       5.747817       Sum of wgt.     347,373
+
+50%     1468.847                      Mean           2978.145
+                        Largest       Std. dev.      3673.846
+75%     4241.727       226519.6
+90%     7814.425       226519.6       Variance       1.35e+07
+95%     10141.07       226519.6       Skewness       10.83181
+99%     15286.28       226519.6       Kurtosis        569.311
+
+. local p95_dist = r(p95)
+
+. 
+. replace min_dist = `p95_dist' if min_dist > `p95_dist'
+(17,367 real changes made)
+
+. 
+. // //Save histograms of Price and Distance for completeness
+. histogram price, title("Histogram of Price")
+(bin=55, start=10500, width=2559768.2)
+
+. graph export "../figs/hist_price.png", replace
+file /Users/amanrana/Documents/Projects/Subway_Proximity_and_House_Prices/scripts/../figs/hist_price.png saved as PNG format
+
+. 
+. histogram min_dist, title("Histogram of Distance to the Closest Station")
+(bin=55, start=5.747817, width=184.27856)
+
+. graph export "../figs/hist_min_dist.png", replace
+file /Users/amanrana/Documents/Projects/Subway_Proximity_and_House_Prices/scripts/../figs/hist_min_dist.png saved as PNG format
+
+. 
+. //Log-Price
+. gen log_price = log(price)
+
+. histogram log_price, title("Histogram of Log-Price")
+(bin=55, start=9.2591305, width=.17279462)
+
+. graph export "../figs/hist_log_price.png", replace
+file /Users/amanrana/Documents/Projects/Subway_Proximity_and_House_Prices/scripts/../figs/hist_log_price.png saved as PNG format
+
+. 
+. scatter log_price min_dist, ytitle("Log Price") xtitle("Distance to the Closest Station")
+
+. graph export "../figs/log_price_distance_scatter.png", replace
+file /Users/amanrana/Documents/Projects/Subway_Proximity_and_House_Prices/scripts/../figs/log_price_distance_scatter.png saved as PNG format
+
+. estimates drop _all
+
+. 
+. estpost summarize log_price min_dist
+
+             |  e(count)   e(sum_w)    e(mean)     e(Var)      e(sd)     e(min)     e(max)     e(sum) 
+-------------+----------------------------------------------------------------------------------------
+   log_price |    347373     347373    12.3983    .734396   .8569691    9.25913   18.76283    4306836 
+    min_dist |    347373     347373   2821.537    8500594   2915.578   5.747817   10141.07   9.80e+08 
+
+. 
+. esttab using "../tables/simple_univariate_summary_stats_table.tex", ///
+>     title("Summary Statistics") ///
+>     cells(mean sd count) ///
+>     label ///
+>     booktabs ///
+>     alignment(c) ///
+>     replace
+(output written to ../tables/simple_univariate_summary_stats_table.tex)
+
+. estimates drop _all
+
+. //Regression results
+. reg log_price min_dist, robust
+
+Linear regression                               Number of obs     =    347,373
+                                                F(1, 347371)      =    8773.51
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.0225
+                                                Root MSE          =     .84728
+
+------------------------------------------------------------------------------
+             |               Robust
+   log_price | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+    min_dist |  -.0000441   4.70e-07   -93.67   0.000     -.000045   -.0000431
+       _cons |   12.52265   .0020842  6008.45   0.000     12.51856    12.52673
+------------------------------------------------------------------------------
+
+. // reg log_price min_dist, robust coeflegend
+. eststo
+(est1 stored)
+
+. 
+. esttab using "../tables/simple_regression_table.tex", ///
+>     title("Regression Results") ///
+>     label ///
+>     se ///
+>     star(* 0.05 ** 0.01 *** 0.001) ///
+>     booktabs ///
+>     alignment(c) ///
+>     longtable ///
+>     stats(r2 N, labels("R-squared" "Observations")) /// Include R-squared and Number of Observations
+>     replace
+(output written to ../tables/simple_regression_table.tex)
+
+. log close
+      name:  <unnamed>
+       log:  /Users/amanrana/Documents/Projects/Subway_Proximity_and_House_Prices/scripts/../logs/02-univariate_submission.log
+  log type:  text
+ closed on:   5 Dec 2024, 20:05:00
+------------------------------------------------------------------------------------------------------------------------------------------------

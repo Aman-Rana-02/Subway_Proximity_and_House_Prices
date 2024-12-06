@@ -1,0 +1,243 @@
+------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/amanrana/Documents/Projects/Subway_Proximity_and_House_Prices/scripts/../logs/05-multivariate_dummy_submission.log
+  log type:  text
+ opened on:   5 Dec 2024, 20:07:03
+
+. use "../data/02-analysis_data/housing_data.dta", clear
+
+. keep price min_dist oldnew year district
+
+. 
+. // Drop missing values or observations where Price/Distance is <= 0
+. drop if missing(price) | missing(min_dist)
+(0 observations deleted)
+
+. drop if price <= 0 | min_dist <= 0
+(0 observations deleted)
+
+. 
+. // Winsorize min_dist at the 95th percentile
+. summarize min_dist, detail
+
+                          Min_dist
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%     123.3681       5.747817
+ 5%     264.6804       5.747817
+10%     364.7357       5.747817       Obs             347,373
+25%     659.4009       5.747817       Sum of wgt.     347,373
+
+50%     1468.847                      Mean           2978.145
+                        Largest       Std. dev.      3673.846
+75%     4241.727       226519.6
+90%     7814.425       226519.6       Variance       1.35e+07
+95%     10141.07       226519.6       Skewness       10.83181
+99%     15286.28       226519.6       Kurtosis        569.311
+
+. local p95_dist = r(p95)
+
+. replace min_dist = `p95_dist' if min_dist > `p95_dist'
+(17,367 real changes made)
+
+. 
+. // Convert min_dist to a dummy variable: 1 if min_dist < 2000, 0 otherwise
+. replace min_dist = (min_dist < 2000)
+(347,373 real changes made)
+
+. 
+. // Generate log_price
+. gen log_price = log(price)
+
+. 
+. // Encode categorical variables
+. encode oldnew, gen(oldnew_encoded)
+
+. encode district, gen(district_encoded)
+
+. estimates drop _all
+
+. 
+. // Regression results without min_dist_squared
+. reg log_price i.min_dist i.oldnew_encoded i.year i.district_encoded c.year#i.district_encoded
+note: 33.district_encoded#c.year omitted because of collinearity.
+
+      Source |       SS           df       MS      Number of obs   =   347,373
+-------------+----------------------------------   F(95, 347277)   =   6242.79
+       Model |  160894.629        95  1693.62767   Prob > F        =    0.0000
+    Residual |  94213.9934   347,277  .271293502   R-squared       =    0.6307
+-------------+----------------------------------   Adj R-squared   =    0.6306
+       Total |  255108.622   347,372  .734396043   Root MSE        =    .52086
+
+-----------------------------------------------------------------------------------------
+              log_price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+------------------------+----------------------------------------------------------------
+             1.min_dist |   .1893469   .0029044    65.19   0.000     .1836543    .1950395
+                        |
+         oldnew_encoded |
+                     Y  |   .1194438   .0047625    25.08   0.000     .1101094    .1287782
+                        |
+                   year |
+                  1996  |    .060523   .0066308     9.13   0.000     .0475267    .0735192
+                  1997  |   .1924895   .0064878    29.67   0.000     .1797737    .2052054
+                  1998  |   .3206132   .0066327    48.34   0.000     .3076132    .3336131
+                  1999  |   .4822547   .0065516    73.61   0.000     .4694138    .4950956
+                  2000  |   .6606428   .0068135    96.96   0.000     .6472886     .673997
+                  2001  |   .7817494   .0068424   114.25   0.000     .7683386    .7951603
+                  2002  |   .9393168   .0069559   135.04   0.000     .9256835    .9529501
+                  2003  |   1.060442   .0073213   144.84   0.000     1.046093    1.074792
+                  2004  |   1.135121   .0075211   150.92   0.000      1.12038    1.149862
+                  2005  |   1.181648   .0079302   149.01   0.000     1.166105    1.197191
+                  2006  |   1.254884   .0079488   157.87   0.000     1.239304    1.270463
+                  2007  |   1.380032   .0082656   166.96   0.000     1.363832    1.396233
+                  2008  |   1.383837   .0096593   143.26   0.000     1.364905    1.402769
+                  2009  |   1.360326   .0100312   135.61   0.000     1.340666    1.379987
+                  2010  |   1.438095   .0099204   144.96   0.000     1.418652    1.457539
+                  2011  |   1.457142   .0102825   141.71   0.000     1.436989    1.477295
+                  2012  |   1.502411   .0105498   142.41   0.000     1.481733    1.523088
+                  2013  |    1.55362   .0106374   146.05   0.000     1.532771    1.574469
+                  2014  |   1.672899   .0108577   154.08   0.000     1.651618     1.69418
+                  2015  |   1.770686   .0112636   157.20   0.000      1.74861    1.792762
+                  2016  |    1.84638   .0117387   157.29   0.000     1.823373    1.869388
+                  2017  |   1.877164   .0122211   153.60   0.000     1.853211    1.901117
+                  2018  |   1.899141   .0125865   150.89   0.000     1.874472    1.923811
+                  2019  |   1.902866   .0130363   145.97   0.000     1.877315    1.928417
+                  2020  |     1.9575   .0134336   145.72   0.000      1.93117    1.983829
+                  2021  |   1.978731   .0133263   148.48   0.000     1.952612     2.00485
+                  2022  |   2.035254   .0139073   146.34   0.000     2.007997    2.062512
+                  2023  |   2.010091   .0146355   137.34   0.000     1.981406    2.038777
+                  2024  |   2.005096   .0165689   121.02   0.000     1.972622    2.037571
+                        |
+       district_encoded |
+                BARNET  |   2.224813   1.945298     1.14   0.253    -1.587914     6.03754
+                BEXLEY  |   5.122999   1.974011     2.60   0.009     1.253994    8.992003
+                 BRENT  |  -19.32242   2.102712    -9.19   0.000    -23.44368   -15.20117
+               BROMLEY  |   5.576541   1.857999     3.00   0.003     1.934918    9.218164
+                CAMDEN  |  -6.402087   2.130007    -3.01   0.003    -10.57684   -2.227335
+        CITY OF LONDON  |  -23.19241   7.644263    -3.03   0.002    -38.17494   -8.209878
+   CITY OF WESTMINSTER  |  -17.67999   2.042751    -8.65   0.000    -21.68372   -13.67625
+               CROYDON  |   4.449789   1.850591     2.40   0.016     .8226845    8.076894
+                EALING  |  -2.390723   1.984812    -1.20   0.228    -6.280898    1.499451
+               ENFIELD  |   2.016662   1.943875     1.04   0.300    -1.793276    5.826601
+             GREENWICH  |  -4.106662   2.006708    -2.05   0.041     -8.03975   -.1735727
+               HACKNEY  |  -29.33557   2.163441   -13.56   0.000    -33.57585   -25.09529
+HAMMERSMITH AND FULHAM  |  -4.642423   2.134821    -2.17   0.030    -8.826609    -.458236
+              HARINGEY  |  -12.52186   2.029904    -6.17   0.000    -16.50041   -8.543306
+                HARROW  |   5.489558   2.198499     2.50   0.013     1.180565    9.798552
+              HAVERING  |   10.55518   1.961692     5.38   0.000     6.710318    14.40004
+            HILLINGDON  |   6.396802   1.954113     3.27   0.001     2.566797    10.22681
+              HOUNSLOW  |   5.913091   2.080249     2.84   0.004     1.835864    9.990317
+             ISLINGTON  |  -5.364371   2.195403    -2.44   0.015    -9.667297   -1.061445
+KENSINGTON AND CHELSEA  |  -12.54248   2.152092    -5.83   0.000    -16.76052   -8.324443
+  KINGSTON UPON THAMES  |   3.983571   2.122547     1.88   0.061    -.1765591    8.143701
+               LAMBETH  |  -9.866027   1.896616    -5.20   0.000    -13.58334   -6.148716
+              LEWISHAM  |  -17.45712    1.92682    -9.06   0.000    -21.23363   -13.68061
+                MERTON  |    -1.1933   2.029142    -0.59   0.556     -5.17036    2.783759
+                NEWHAM  |  -14.90858   2.059185    -7.24   0.000    -18.94453   -10.87264
+             REDBRIDGE  |  -.2418669   2.023229    -0.12   0.905    -4.207337    3.723603
+  RICHMOND UPON THAMES  |   8.947457   1.984681     4.51   0.000      5.05754    12.83737
+             SOUTHWARK  |  -18.27174   2.031267    -9.00   0.000    -22.25296   -14.29052
+                SUTTON  |   8.081535   2.016899     4.01   0.000     4.128472     12.0346
+         TOWER HAMLETS  |   1.581495   2.261458     0.70   0.484    -2.850896    6.013886
+        WALTHAM FOREST  |  -23.41224   1.948315   -12.02   0.000    -27.23088    -19.5936
+            WANDSWORTH  |  -3.229755   1.828862    -1.77   0.077    -6.814271     .354761
+                        |
+district_encoded#c.year |
+  BARKING AND DAGENHAM  |  -.0020081   .0009112    -2.20   0.028    -.0037941   -.0002222
+                BARNET  |  -.0028093   .0007191    -3.91   0.000    -.0042187   -.0013998
+                BEXLEY  |  -.0043869   .0007382    -5.94   0.000    -.0058337   -.0029401
+                 BRENT  |   .0078753   .0008218     9.58   0.000     .0062647     .009486
+               BROMLEY  |  -.0044665   .0006591    -6.78   0.000    -.0057583   -.0031746
+                CAMDEN  |   .0016829   .0008387     2.01   0.045      .000039    .0033268
+        CITY OF LONDON  |   .0099779   .0037513     2.66   0.008     .0026254    .0173303
+   CITY OF WESTMINSTER  |   .0074037   .0007834     9.45   0.000     .0058683    .0089391
+               CROYDON  |  -.0040178   .0006538    -6.14   0.000    -.0052993   -.0027363
+                EALING  |  -.0005481   .0007457    -0.73   0.462    -.0020097    .0009135
+               ENFIELD  |  -.0027997   .0007183    -3.90   0.000    -.0042076   -.0013918
+             GREENWICH  |   .0002538   .0007602     0.33   0.738    -.0012361    .0017437
+               HACKNEY  |   .0129105   .0008599    15.01   0.000     .0112251    .0145959
+HAMMERSMITH AND FULHAM  |   .0007832   .0008417     0.93   0.352    -.0008665    .0024329
+              HARINGEY  |    .004481   .0007746     5.78   0.000     .0029628    .0059993
+                HARROW  |  -.0045076   .0008816    -5.11   0.000    -.0062355   -.0027798
+              HAVERING  |  -.0070932   .0007311    -9.70   0.000    -.0085261   -.0056602
+            HILLINGDON  |  -.0050013   .0007256    -6.89   0.000    -.0064235   -.0035791
+              HOUNSLOW  |  -.0047213   .0008078    -5.84   0.000    -.0063045    -.003138
+             ISLINGTON  |   .0010679   .0008796     1.21   0.225    -.0006561    .0027919
+KENSINGTON AND CHELSEA  |   .0049801   .0008527     5.84   0.000     .0033088    .0066513
+  KINGSTON UPON THAMES  |  -.0036179   .0008344    -4.34   0.000    -.0052532   -.0019825
+               LAMBETH  |   .0032201   .0006859     4.69   0.000     .0018757    .0045644
+              LEWISHAM  |   .0069197   .0007066     9.79   0.000     .0055348    .0083046
+                MERTON  |  -.0011045   .0007742    -1.43   0.154    -.0026219     .000413
+                NEWHAM  |   .0054884   .0007947     6.91   0.000     .0039308     .007046
+             REDBRIDGE  |  -.0017194   .0007711    -2.23   0.026    -.0032308    -.000208
+  RICHMOND UPON THAMES  |  -.0059743   .0007451    -8.02   0.000    -.0074347    -.004514
+             SOUTHWARK  |   .0074046   .0007762     9.54   0.000     .0058833    .0089259
+                SUTTON  |  -.0057911   .0007666    -7.55   0.000    -.0072936   -.0042885
+         TOWER HAMLETS  |  -.0025248   .0009215    -2.74   0.006    -.0043309   -.0007187
+        WALTHAM FOREST  |   .0097888   .0007209    13.58   0.000     .0083758    .0112018
+            WANDSWORTH  |          0  (omitted)
+                        |
+                  _cons |   14.57116   1.826092     7.98   0.000     10.99208    18.15025
+-----------------------------------------------------------------------------------------
+
+. // reg log_price i.min_dist i.oldnew_encoded c.year##i.district_encoded, robust coeflegend
+. 
+. // Export regression results to LaTeX
+. esttab using "../tables/dummy_MV_regression_table.tex", ///
+>     title("Regression results using the close/far dummy Min_dist is either 0 or 1. Shows us that the dummy effect is still economically and st
+> atistically significant in-context with our controls." ) ///
+>     label ///
+>     se ///
+>     star(* 0.05 ** 0.01 *** 0.001) ///
+>     booktabs ///
+>     alignment(c) ///
+>     longtable ///
+>     stats(r2 N, labels("R-squared" "Observations")) /// Include R-squared and Number of Observations
+>     replace
+(output written to ../tables/dummy_MV_regression_table.tex)
+
+. 
+. // Generate fitted values and residuals
+. predict fitted_values
+(option xb assumed; fitted values)
+
+. predict residuals, residuals
+
+. 
+. // Create buckets for fitted values
+. egen fitted_bucket = cut(fitted_values), at(10(0.1)14)
+(2,347 missing values generated)
+
+. collapse (mean) log_price fitted_values residuals, by(fitted_bucket)
+
+. 
+. // Generate the expected vs actual plot
+. twoway (scatter log_price fitted_bucket, msymbol(circle)) ///
+>        (line fitted_values fitted_bucket, lcolor(blue)), ///
+>        title("Bucketed: Expected vs Actual") ///
+>        xtitle("Predicted", angle(45)) ///
+>        ytitle("Actual", angle(45))
+
+. 
+. // Save the plot as png
+. graph export "../figs/bucketed_dummy_expected_vs_actual.png", as(png) replace
+file /Users/amanrana/Documents/Projects/Subway_Proximity_and_House_Prices/scripts/../figs/bucketed_dummy_expected_vs_actual.png saved as PNG
+    format
+
+. 
+. // Generate the fitted vs residuals plot
+. twoway (scatter residuals fitted_bucket, msymbol(circle)), ///
+>        title("Bucketed: Fitted vs Residuals") ///
+>        xlabel(, angle(45)) ylabel(, angle(45))
+
+. 
+. // Save the plot as png
+. graph export "../figs/dummy_fitted_vs_residuals.png", as(png) replace
+file /Users/amanrana/Documents/Projects/Subway_Proximity_and_House_Prices/scripts/../figs/dummy_fitted_vs_residuals.png saved as PNG format
+
+. log close
+      name:  <unnamed>
+       log:  /Users/amanrana/Documents/Projects/Subway_Proximity_and_House_Prices/scripts/../logs/05-multivariate_dummy_submission.log
+  log type:  text
+ closed on:   5 Dec 2024, 20:07:07
+------------------------------------------------------------------------------------------------------------------------------------------------

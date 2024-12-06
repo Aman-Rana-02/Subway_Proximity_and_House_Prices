@@ -1,0 +1,23 @@
+------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/amanrana/Documents/Projects/Subway_Proximity_and_House_Prices/scripts/../logs/01-convert
+> _raw_to_dta.log
+  log type:  text
+ opened on:   5 Dec 2024, 20:02:57
+
+. import delimited "../data/01-raw_data/housing_data.csv", clear
+(encoding automatically selected: ISO-8859-1)
+(25 vars, 347,373 obs)
+
+. keep price min_dist oldnew year district
+
+. save "../data/02-analysis_data/housing_data.dta", replace
+file ../data/02-analysis_data/housing_data.dta saved
+
+. log close
+      name:  <unnamed>
+       log:  /Users/amanrana/Documents/Projects/Subway_Proximity_and_House_Prices/scripts/../logs/01-convert
+> _raw_to_dta.log
+  log type:  text
+ closed on:   5 Dec 2024, 20:03:00
+------------------------------------------------------------------------------------------------------------

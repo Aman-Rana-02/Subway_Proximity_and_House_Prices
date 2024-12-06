@@ -13,10 +13,9 @@ The analysis of our limitations can be broken into internal and external validit
      but that does not solve the time-variant relationship where growing neighborhoods get subway allocations.
       In a future work we would frame a subway being built as a treatment, and attempt a difference-in-difference analysis, 
       so we can gauge economic significance and price effects of subways without having to consider some of the other omitted variables.
-In our analysis we also assumed that our data was i.i.d. However we can assure that this may not be true as we 
-saw in the 2008 financial crisis when many people sell houses at the same time it leads to a depreciation in 
-house price which leads to more people selling their homes. This means that one person selling their house may 
-affect the decision of another person to sell their own home.
+In our analysis we also assumed that our data was i.i.d. However this may not be true as we 
+saw in the 2008 financial crisis when many people sold houses at the same time, leading to a depreciation in 
+house price, causing panic and further selling. This means that there are regimes where selling a house has a causal effect on another person selling a house.
 
 \subsubsection{External Validity}
 The external validity of our regression is limited. The population studied are homes in the Greater London Area, 
@@ -32,4 +31,6 @@ The relationship is likely piece wise, beyond 2km away from a station the distan
 We would warn against assuming external validity, and exogenous factors like governance and housing density could affect inferences. 
 Marginal distance from subway stations are statistically significant but economically insignificant in their relationship with house price.
 Being 'close' to a subway station however, is statistically and economically significant, even when controlling for district, building age,
- and time effects.
+ and time effects. We are wary about causality given that our residuals have a non-zero mean. Given the 
+ distribution of our residuals vs fitted the specification is missing a factor that explains the variation is lower priced home. This may be size, which we've discussed,
+ or some other factor.
