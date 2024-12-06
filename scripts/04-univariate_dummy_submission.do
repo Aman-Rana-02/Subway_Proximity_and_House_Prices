@@ -1,3 +1,4 @@
+log using "../logs/04-univariate_dummy_submission.log", replace
 use "../data/02-analysis_data/housing_data.dta", clear
 
 // Drop NaN or Price/Distance is <= 0
@@ -34,6 +35,4 @@ esttab using "../tables/dummy_simple_regression_table.tex", ///
     stats(r2 N, labels("R-squared" "Observations")) /// Include R-squared and Number of Observations
     replace
 
-display _N
-display _b[min_dist]
-display _se[min_dist]
+log close

@@ -1,3 +1,4 @@
+log using "../logs/05-multivariate_dummy_submission.log", replace
 use "../data/02-analysis_data/housing_data.dta", clear
 keep price min_dist oldnew year district
 
@@ -27,7 +28,7 @@ reg log_price i.min_dist i.oldnew_encoded i.year i.district_encoded c.year#i.dis
 
 // Export regression results to LaTeX
 esttab using "../tables/dummy_MV_regression_table.tex", ///
-    title("Regression results using the close/far dummy Min_dist is either 0 or 1. Shows us that the dummy effect is still economically and statistically significant in-context with our controls.") ///
+    title("Regression results using the close/far dummy Min_dist is either 0 or 1. Shows us that the dummy effect is still economically and statistically significant in-context with our controls." ) ///
     label ///
     se ///
     star(* 0.05 ** 0.01 *** 0.001) ///
@@ -62,4 +63,4 @@ twoway (scatter residuals fitted_bucket, msymbol(circle)), ///
 
 // Save the plot as png
 graph export "../figs/dummy_fitted_vs_residuals.png", as(png) replace
-
+log close

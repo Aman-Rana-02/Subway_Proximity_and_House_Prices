@@ -1,3 +1,4 @@
+log using "../logs/02-univariate_submission.log", replace
 use "../data/02-analysis_data/housing_data.dta", clear
 
 // //Save a scatter plot of price on min_dist
@@ -55,3 +56,4 @@ esttab using "../tables/simple_regression_table.tex", ///
     longtable ///
     stats(r2 N, labels("R-squared" "Observations")) /// Include R-squared and Number of Observations
     replace
+log close

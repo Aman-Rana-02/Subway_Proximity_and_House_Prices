@@ -1,3 +1,4 @@
+log using "../logs/03-multivariate_submission.log", replace
 use "../data/02-analysis_data/housing_data.dta", clear
 keep price min_dist oldnew year district
 
@@ -101,3 +102,4 @@ twoway (scatter residuals fitted_bucket, msymbol(circle)), ///
 
 * Save the plot as a png
 graph export "../figs/MV_fitted_vs_residuals.png", as(png) replace
+log close
