@@ -11,32 +11,11 @@ In our data cleaning section we windsorize distance at 10km and can assume our d
 We use robust standard errors in our regressions, and therefore aren't concerned about the homoscedasticity of errors.
 
 \subsection{Univariate Linear Regressions}
-\subsubsection{Univariate Specifications}
-\begin{equation}
-   \log(\text{Price}) =\beta_0 + \beta_1 \cdot \text{Min\_dist}+\epsilon
-      \label{eq:univariate_linear_regression}
-\end{equation}
-\begin{equation}
-   \log(\text{Price}) =\beta_0+\beta_2 \cdot \text{close}+\epsilon
-   \label{eq:dummy_univariate_linear_regression}
-\end{equation}
-
-Where:
-\begin{itemize}
-   \setlength{\itemsep}{0pt}%
-   \setlength{\parskip}{0pt}%
-   \setlength{\parsep}{0pt}%
-      \item $Log(Price)$ is the log of the price of the house
-      \item $\beta_0$ is the intercept and not shared between the two specifications
-      \item $\beta_1$ is the coefficient of the distance to the nearest subway station
-      \item $\beta_2$ is the coefficient of the distance dummy, whether the house is close (within 2000m) to a subway station or not
-      \item $\text{Min\_dist}$ is the distance to the nearest subway station
-      \item $\epsilon$ is the error term
-   \end{itemize}
-
+We run two univariate regressions, Specification \ref{eq:univariate_linear_regression} and Specification \ref{eq:dummy_univariate_linear_regression}, to understand the relationship between distance and price.
+Specification \ref{eq:univariate_linear_regression} regresses the log of price on distance to the nearest subway station in meters, while Specification \ref{eq:dummy_univariate_linear_regression} regresses the log of price on a dummy variable for whether the house is within 2000m of a subway station.
 \subsubsection{Univariate Results}
 We start with our simplest specifications. We regress the log of price on distance to get a basic understanding of the 
-relationship between our variable of interest and our dependent variable. 
+relationship between our variable of interest and our dependent variable (Specification~\ref{eq:univariate_linear_regression}). 
 Using this specification we find statistically significant null effects for distance on price. 
 Table~\ref{tab:summary_regression_table} shows us that the coefficient of our variable of interest is -.0000431 at above the 5\% significance.
 The coefficient can be interpreted as a 0.0000431\% decrease in house price for each additional meter of distance from a subway station, which is economically insignificant.
@@ -52,49 +31,16 @@ controls in our multivariate analysis. We would expect the economic significance
 Since subway stations are typically central, we would expect neighbourhoods further away to have lower house prices. Omitting 
 district controls would bias our coefficient to be more positive than it should be. We would also expect house prices to increase over time, whereas they decrease with min\_dist. Omitting time controls would bias our coefficient to be more 
 positive than it should be.
+
 \subsection{Multivariate Linear Regressions}
-
-\subsubsection{Multivariate Specifications}
-\begin{equation}
-   \begin{aligned}
-   \log(\text{Price}) &= \beta_0 + \beta_1 \cdot \text{Min\_dist} + \beta_3 \cdot (\text{Min\_dist})^2 \\
-   &\quad + \beta_4 \cdot \text{oldnew} + \beta_5 \cdot \text{district}
-   + \beta_6 \cdot \text{year} + \beta_7 \cdot (\text{district} \times \text{year}) + \epsilon
-   \end{aligned}
-   \label{eq:multivariate_linear_regression}
-\end{equation}
-   
-\begin{equation}
-   \begin{aligned}
-   \log(\text{Price}) &= \beta_0 + \beta_2 \cdot \text{close}\\
-   &\quad + \beta_4 \cdot \text{oldnew} + \beta_5 \cdot \text{district} 
-   + \beta_6 \cdot \text{year} + \beta_7 \cdot (\text{district} \times \text{year}) 
-   + \epsilon
-   \end{aligned}
-   \label{eq:dummy_multivariate_linear_regression}
-\end{equation}
-
-Where:
-\begin{itemize}
-   \setlength{\itemsep}{0pt}%
-   \setlength{\parskip}{0pt}%
-   \setlength{\parsep}{0pt}%
-      \item $\beta_3$ is the coefficient of the squared distance to the nearest subway station
-      \item $\beta_4$ is the coefficient on the age of the house
-      \item $\beta_5$ is a matrix of coefficients for district dummies
-      \item $\beta_6$ is the coefficient of the year
-      \item $\beta_7$ is a matrix of coefficients for the interaction of district and year dummies
-      \item $\text{oldnew}$ is a dummy variable for the age of the house
-      \item $\text{district}$ represents dummy variables for the district of the house
-      \item $\text{year}$ represents dummy variables for the year of the observation
-   \end{itemize}
-
 We include a squared term for distance in our multivariate regression to account for the non-linear relationship between distance and price we find in Figure\ref{log_price_scatter}.
 
 We now include controls for the age of the house, the district of the house, and the year of the observation. The economic basis for this, is we expect there to be 
 price variation between older and newer homes because of the quality of the home. We also expect price variation between districts as some districts
 hold premiums due to proximity to a city center or other amenities. We also expect price variation over time as the economy grows and inflation occurs.
 Consider that some districts receive more or less government funding and expansion. Since we might expect the time varying effect to be different across districts, we include an interaction term between district and year.
+The two Specifications are formally outlined in the Appendix. Specification \ref{eq:multivariate_linear_regression} includes the continuous distance variable with controls, while Specification \ref{eq:dummy_multivariate_linear_regression} 
+includes the dummy variable for being close to a subway station, with controls.
 
 \subsubsection{Multivariate Results}
 Table~\ref{tab:summary_regression_table} hides the coefficients of the controls, but a full table of the results can be found in the appendix under Table~\ref{tab:full_MV_regression_results} and Table~\ref{tab:full_MV_regression_results_w_dummy}.
