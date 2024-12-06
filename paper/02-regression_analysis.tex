@@ -7,7 +7,7 @@ are interpretable as percentage changes in price. We inspect our variable of int
 see the marginal effect of each additional meter of distance on price, and as a dummy variable to see the effect of being subjectively close to a subway station.
 We look at Figure~\ref{log_price_scatter} to see the relationship between distance and price, and decide on 2000m as distinguishing being close to a station or far.
 For our analysis, we assume that our data is identical and independently distributed since we do not expect the lease transfer of one house to affect the lease transfer of another.
-In our data cleaning section we windsorize distance at 10km and can assume our data contains no large outliers.
+In our data cleaning section we windsorized distance at 10km and can assume our data contains no large outliers.
 We use robust standard errors in our regressions, and therefore aren't concerned about the homoscedasticity of errors.
 
 \subsection{Univariate Linear Regressions}
@@ -33,7 +33,7 @@ district controls would bias our coefficient to be more positive than it should 
 positive than it should be.
 
 \subsection{Multivariate Linear Regressions}
-We include a squared term for distance in our multivariate regression to account for the non-linear relationship between distance and price we find in Figure\ref{log_price_scatter}.
+We include a squared term for distance in our multivariate regression to account for the non-linear relationship between distance and price we find in Figure~\ref{log_price_scatter}.
 
 We now include controls for the age of the house, the district of the house, and the year of the observation. The economic basis for this, is we expect there to be 
 price variation between older and newer homes because of the quality of the home. We also expect price variation between districts as some districts
@@ -43,7 +43,7 @@ The two Specifications are formally outlined in the Appendix. Specification \ref
 includes the dummy variable for being close to a subway station, with controls.
 
 \subsubsection{Multivariate Results}
-Table~\ref{tab:summary_regression_table} hides the coefficients of the controls, but a full table of the results can be found in the appendix under Table~\ref{tab:full_MV_regression_results} and Table~\ref{tab:full_MV_regression_results_w_dummy}.
+Table~\ref{tab:summary_regression_table} hides the coefficients of the controls, but a full table of the results can be found in the appendix under Table~\ref{tab:full_MV_regression_results}.
 
 In our multivariate regression with the continuous polynomial for distance (Specification \ref{eq:multivariate_linear_regression}), we find that the coefficient is still economically insignificant (-0.0001261). As expected, controlling for district and time-varying effects increases the magnitude of our result, 
 but we still conclude a precise null marginal effect of distance on house price.
@@ -53,7 +53,7 @@ In our final specification (Specification~\ref{eq:dummy_multivariate_linear_regr
  However, much of the variation is now explained by the controls, and we find a more reasonable 0.18\% increase attributable to being close (Within 2km) to a subway station.
  This aligns with the results of \citet{rietveld_2007}, which finds that the price effect of subway stations is primarily in short distances.
 
-Notably, our $R^2$ jumps from 0.03 in our univariate regression to 0.6 in our multivariate regression(Table \ref{tab:full_simple_regression_results} and Table~\ref{tab:full_MV_regression_results}).
+Notably, our $R^2$ jumps from 0.03 in our univariate regression to 0.6 in our multivariate regression(Table \ref{tab:full_simple_regression_results}).
 This is a good sign that our multivariate specifications which include controls are explaining much of the variation in logarithmic house prices.
 
 Looking at the predicted versus actual plots in Figure~\ref{MV_bucketed_predicted_vs_actual} and Figure~\ref{MV_dummy_bucketed_predicted_vs_actual}, we see that our models are well-specified, apart from at the lower tail.

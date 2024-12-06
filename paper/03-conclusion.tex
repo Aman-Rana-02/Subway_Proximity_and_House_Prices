@@ -9,11 +9,11 @@ The analysis of our limitations can be broken into internal and external validit
    We would expect house size to explain some of the variation in house price since larger houses command higher prices.
     However without further analysis it would be difficult to estimate the effect of house size since larger houses are in less dense areas of the city where property is also generally cheaper.
      We also run into the problem of simultaneous causality, areas that become trendy and develop would command higher housing prices, 
-     which could justify a new subway station nearby. We attempt to control for this using time-invariant district fixed effects 
+     which could justify a new subway station nearby. We attempt to control for this using time and district fixed effects, 
      but that does not solve the time-variant relationship where growing neighborhoods get subway allocations.
       In a future work we would frame a subway being built as a treatment, and attempt a difference-in-difference analysis, 
       so we can gauge economic significance and price effects of subways without having to consider some of the other omitted variables.
-In our analysis we also assumed that our data was i.i.d. However this may not be true as we 
+In our analysis we also assumed that our data was i.i.d. However, this may not be true as we 
 saw in the 2008 financial crisis when many people sold houses at the same time, leading to a depreciation in 
 house price, causing panic and further selling. This means that there are regimes where selling a house has a causal effect on another person selling a house.
 
@@ -30,7 +30,7 @@ This analysis includes controls for time, district, and a polynomial fit for the
 The relationship is likely piece wise, beyond 2km away from a station the distance from a station has little effect on price.
 We would warn against assuming external validity, and exogenous factors like governance and housing density could affect inferences. 
 Marginal distance from subway stations are statistically significant but economically insignificant in their relationship with house price.
-Being 'close' to a subway station however, is statistically and economically significant, even when controlling for district, building age,
+Being `close' to a subway station however, is statistically and economically significant, even when controlling for district, building age,
  and time effects. We are wary about causality given that our residuals have a non-zero mean. Given the 
  distribution of our residuals vs fitted, the specification is missing a factor that explains the variation in lower priced homes. This may be size, which we've discussed,
  or some other factor.
